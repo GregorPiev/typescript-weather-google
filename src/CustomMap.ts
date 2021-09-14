@@ -1,10 +1,12 @@
 import * as google from 'google-maps';
 
-interface IMappable {
+export interface IMappable {
   location: {
     lat: number;
     lng: number;
   };
+  markerContent(): string;
+  color: string;
 }
 
 export class CustomMap {
@@ -52,9 +54,10 @@ export class CustomMap {
           lng: mappable.location.lng
         }
       });
+
       marker.addListener('click', () => {
         const infoWindow = new this.googleCreator.maps.InfoWindow({
-          content: 'שלום גרגורי'
+          content: mappable.markerContent()
         });
 
         infoWindow.open(this.googleCustomMap, marker);
